@@ -7,7 +7,7 @@ version= "0.1.0"
 [platform]
 target = "java8"
 
-[[platform.libraries]]
+    [[platform.libraries]]
     module = "producer"
     path = "./javalibs/kafka-avro-serializer-5.4.1.jar"
     artifactId = "kafka-avro-serializer"

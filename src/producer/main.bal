@@ -1,6 +1,14 @@
 import ballerina/io;
 import ballerina/kafka;
 
+kafka:ProducerConfiguration producerConfiguration = {
+    bootstrapServers: "localhost:9092",
+    valueSerializerType: kafka:SER_AVRO,
+    schemaRegistryUrl: "http://localhost:8081"
+};
+
+kafka:Producer producer = new(producerConfiguration);
+
 public type Person record {
     string name;
     int age;
@@ -29,15 +37,9 @@ string schema = "{\"type\" : \"record\"," +
                         "}" +
                   "]}";
 
-kafka:ProducerConfiguration producerConfiguration = {
-    bootstrapServers: "localhost:9092",
-    valueSerializerType: kafka:SER_AVRO,
-    schemaRegistryUrl: "http://localhost:8081"
-};
-
 public function main() {
     Account account = {
-        accountNumber: 19900515,
+        accountNumber: 19930808,
         balance: 123.23
     };
     Person person = {
@@ -51,8 +53,7 @@ public function main() {
         dataRecord: person
     };
 
-    kafka:Producer kafkaProducer = new(producerConfiguration);
-    var result = kafkaProducer->send(avroRecord, "add-person-with-acount");
+    var result = producer->send(avroRecord, "add-person-with-account");
     if (result is kafka:ProducerError) {
         io:println(result);
     } else {
