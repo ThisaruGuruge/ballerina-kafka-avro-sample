@@ -16,14 +16,7 @@ service KafkaService on consumer {
         foreach var kafkaRecord in records {
             anydata value = kafkaRecord.value;
             if (value is kafka:AvroGenericRecord) {
-                string name = <string>value["name"];
-                int age = <int>value["age"];
-                int accountNumber = <int>value["accountNumber"];
-                float balance = <float>value["balance"];
-                log:printInfo("Name: " + name);
-                log:printInfo("Age: " + age.toString());
-                log:printInfo("AccountNumber: " + accountNumber.toString());
-                log:printInfo("Balance: " + balance.toString());
+                log:printInfo(value.toString());
             } else {
                 log:printError("Invalid record type received.");
             }
